@@ -3,7 +3,14 @@ package machines
 import regex._
 import dfa._
 
-// Convert regular languages to strings that are easier to read
+/** Convert a regular language to a string that uses standard symbols for
+  * describing regular languages.
+  *
+  * @param lang
+  *   a regular language
+  * @return
+  *   a string that describes the regular language
+  */
 def regexToString(lang: RegularLanguage): String = lang match {
   case Empty          => "∅"
   case Epsilon        => "ε"
@@ -13,23 +20,17 @@ def regexToString(lang: RegularLanguage): String = lang match {
   case Star(l)        => s"(${regexToString(l)}*)"
 }
 
-// Convert a regular language to a DFA state
-def langToState(r: RegularLanguage): State = State(regexToString(r))
-
-// Repeatedly simplify a regular language until it stops changing
-def reduce(lang: RegularLanguage): RegularLanguage = {
-  var previous = lang
-  var next = simplify(previous)
-  while (previous != next) {
-    previous = next
-    next = simplify(previous)
-  }
-  next
-}
-
-// Converting a regular language to a DFA
+/** Given a regular language and an alphabet of valid input characters, convert
+  * the language to an equivalent DFA.
+  *
+  * @param r
+  *   a regular language
+  * @param alphabet
+  *   a set of valid input characters
+  * @return
+  *   a DFA that accepts the regular language.
+  */
 def regexToDFA(r: RegularLanguage, alphabet: Set[Char]) = {
-  // println(alphabet)
   // A simplified version of the regular language
   val start = reduce(r)
 
@@ -63,18 +64,27 @@ def regexToDFA(r: RegularLanguage, alphabet: Set[Char]) = {
   )
 }
 
-/** Compute all the derivatives of a regular language with respect to all the
-  * characters in the alphabet.
-  *
-  * @param alphabet
-  *   the alphabet of the regular language
-  * @param r
-  *   the regular language
-  * @return
-  *   a list of all the derivatives of r with respect to all the characters in
-  *   the alphabet, in no particular order
-  */
-def allDerivatives(
+////////////////////////////////////////////////////////////////////////////////
+// Helper functions
+////////////////////////////////////////////////////////////////////////////////
+
+// Convert a regular language to a DFA state
+private def langToState(r: RegularLanguage): State = State(regexToString(r))
+
+// Repeatedly simplify a regular language until it stops changing
+private def reduce(lang: RegularLanguage): RegularLanguage = {
+  var previous = lang
+  var next = simplify(previous)
+  while (previous != next) {
+    previous = next
+    next = simplify(previous)
+  }
+  next
+}
+
+// Compute all the derivatives of a regular language with respect to all the
+// characters in the alphabet.
+private def allDerivatives(
     alphabet: Set[Char],
     r: RegularLanguage
 ): List[RegularLanguage] = {

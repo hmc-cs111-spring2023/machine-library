@@ -1,6 +1,6 @@
 package machines.regex
 
-/** The supertype of all regular languages * */
+/** The supertype of all regular languages */
 trait RegularLanguage {
 
   /** Given a string s and a language l, returns true if the string matches the

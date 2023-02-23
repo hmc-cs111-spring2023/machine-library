@@ -3,17 +3,7 @@ package machines.dfa
 import java.io._
 import sys.process._
 
-/** Surrounds a given string with quote characters */
-def quote(s: String): String = s"\"$s\""
-
-/** Add a graphViz method to states */
-def stateToGV(state: State): String = quote(state.label)
-
-/** Add a graphViz method to transitions */
-def transitionToGV(transition: Transition): String =
-  s"\t${quote(transition.from.label)} -> ${quote(transition.to.label)} [label=${transition.symbol}]"
-
-/** Add a graphViz method to DFAs */
+/** Add a GraphViz method to DFAs */
 def graphViz(dfa: DFA): String = {
   (
     List(
@@ -28,7 +18,7 @@ def graphViz(dfa: DFA): String = {
   ).mkString("\n")
 }
 
-/** Write a dfa to a file, in graphviz format */
+/** Write a DFA to a file, in GraphViz format */
 def writeFile(dfa: DFA, filename: String = "./output.dot"): Unit = {
   val file = new File(filename)
   val bw = new BufferedWriter(new FileWriter(file))
@@ -36,3 +26,13 @@ def writeFile(dfa: DFA, filename: String = "./output.dot"): Unit = {
   bw.close()
   s"dot -Tpng $filename -o $filename.png".!
 }
+
+/** Surrounds a given string with quote characters */
+private def quote(s: String): String = s"\"$s\""
+
+/** Add a graphViz method to states */
+private def stateToGV(state: State): String = quote(state.label)
+
+/** Add a graphViz method to transitions */
+private def transitionToGV(transition: Transition): String =
+  s"\t${quote(transition.from.label)} -> ${quote(transition.to.label)} [label=${transition.symbol}]"

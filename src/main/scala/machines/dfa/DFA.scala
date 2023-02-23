@@ -47,7 +47,9 @@ class DFA(
     accept.contains(finalState)
   }
 
-  def findTransition(state: State, symbol: Char): State =
+  // Given a state and an input symbol, finds the next state
+  // @throws Exception if there is not transition for the given state and input character
+  private def findTransition(state: State, symbol: Char): State =
     this.transitions.toList.filter(transition =>
       transition.from == state && transition.symbol == symbol
     ) match {
