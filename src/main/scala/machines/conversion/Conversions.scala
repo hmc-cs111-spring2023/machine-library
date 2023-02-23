@@ -1,4 +1,4 @@
-package conversion
+package machines
 
 import regex._
 import dfa._

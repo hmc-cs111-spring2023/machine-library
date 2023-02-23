@@ -1,4 +1,4 @@
-package dfa
+package machines.dfa
 
 import java.io._
 import sys.process._

@@ -1,4 +1,4 @@
-package regex
+package machines.regex
 
 /** The supertype of all regular languages * */
 trait RegularLanguage {

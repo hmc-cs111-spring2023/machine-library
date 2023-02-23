@@ -1,4 +1,4 @@
-package dfa
+package machines.dfa
 
 /** Represents a DFA state
   *
